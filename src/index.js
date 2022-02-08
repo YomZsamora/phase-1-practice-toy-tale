@@ -24,16 +24,12 @@ let toggleForm = () => {
 let fetchToys = () => {
    fetch('http://localhost:3000/toys')
    .then(resp => resp.json())
-   .then(toys => {
-      renderToyDetails(toys)
-   })
+   .then(toys => { renderToyDetails(toys) })
 }
 
 // Renders toy details for each retrieved toy from the response
 let renderToyDetails = toys => {
-   toys.forEach(toy => {
-      createCardElement(toy)
-   })
+   toys.forEach(toy => { createCardElement(toy) })
 }
 
 let createCardElement = toy => {
@@ -41,9 +37,14 @@ let createCardElement = toy => {
    toysCard.className = "card";
    document.getElementById("toy-collection").appendChild(toysCard);
    toysCard.innerHTML += `<h2>${toy.name}</h2>`
-   toysCard.innerHTML += `<img src="${toy.image}" class="toy-avatar">`
-   toysCard.innerHTML += `<p>${toy.likes} Likes </p>`
-   toysCard.innerHTML += `<button class="like-btn" id="${toy.id}">Like </button>`
+                           + `<img src="${toy.image}" class="toy-avatar">`
+                           + `<p>${toy.likes} Likes </p>`
+                           +`<button class="like-btn" id="${toy.id}">Like </button>`
+   toysCard.querySelector(".like-btn").addEventListener('click', () => {
+      toy.likes += 1;
+      toysCard.querySelector('p').textContent = `${toy.likes} Likes` ;
+      updateNoOfLikes(toy);
+   });
 }
 
 let submitNewToy = (e) => {
@@ -72,7 +73,16 @@ let submitNewToy = (e) => {
    // Using fetch() to send GET requests by handling responses to fetch()
    return fetch("http://localhost:3000/toys", configurationObject)
    .then(resp => resp.json())
-   .then(toy => {
-      createCardElement(toy)
+   .then(toy => { createCardElement(toy) })
+}
+
+let updateNoOfLikes = toy => {
+   fetch(`http://localhost:3000/toys/${toy.id}`, {
+      method: 'PATCH',
+      headers: {
+			"Content-Type": "application/json",
+		},
+      body: JSON.stringify(toy)
    })
+   .then(resp => resp.json())
 }

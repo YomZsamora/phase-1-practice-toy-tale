@@ -51,8 +51,14 @@
     {
       "name": "Jessie",
       "image": "https://i.postimg.cc/t43Q4wnv/jessie-toy.jpg",
-      "likes": 0,
+      "likes": 5,
       "id": 9
+    },
+    {
+      "name": "Jessie",
+      "image": "https://i.postimg.cc/t43Q4wnv/jessie-toy.jpg",
+      "likes": 2,
+      "id": 10
     }
   ]
 }
