@@ -32,6 +32,7 @@ let renderToyDetails = toys => {
    toys.forEach(toy => { createCardElement(toy) })
 }
 
+// Creates the card and it's child elements as well as interpolates the specific toy's details 
 let createCardElement = toy => {
    const toysCard = document.createElement("div");
    toysCard.className = "card";
@@ -47,6 +48,7 @@ let createCardElement = toy => {
    });
 }
 
+// Adds a new toy to our list of toys after providing a name and an image
 let submitNewToy = (e) => {
    e.preventDefault();
    let name = document.querySelector('[name="name"]').value;
@@ -76,6 +78,7 @@ let submitNewToy = (e) => {
    .then(toy => { createCardElement(toy) })
 }
 
+// Updates no of likes a cliking on the like button
 let updateNoOfLikes = toy => {
    fetch(`http://localhost:3000/toys/${toy.id}`, {
       method: 'PATCH',
