@@ -1,49 +1,43 @@
 let addToy = false;
+const addBtn = document.querySelector("#new-toy-btn");
+const toyFormContainer = document.querySelector(".container");
 
 
 document.addEventListener("DOMContentLoaded", () => {
-   
-   fetchImages();
-   const addBtn = document.querySelector("#new-toy-btn");
-   const toyFormContainer = document.querySelector(".container");
-   addBtn.addEventListener("click", () => {
-      // hide & seek with the form
-      addToy = !addToy;
-      if (addToy) {
-         toyFormContainer.style.display = "block";
-      } else {
-         toyFormContainer.style.display = "none";
-      }
-   });
+   addBtn.addEventListener("click", toggleForm);
+   fetchToys();
 });
 
-let fetchToys = () => {
-   
+// hide & seek with the form
+let toggleForm = () => {
+   addToy = !addToy;
+   if (addToy) {
+      toyFormContainer.style.display = "block";
+   } else {
+      toyFormContainer.style.display = "none";
+   }
 }
 
-// Fetches the images using the url provided.
-let fetchImages = () => {
+// Fetches the toys details / info using the url provided.
+let fetchToys = () => {
    fetch('http://localhost:3000/toys')
    .then(resp => resp.json())
    .then(toys => {
-      const imageURL = toys;
-      const imageURLsArray = createImgElement(imageURL)
-      renderImgs(imageURLsArray)
+      renderToyDetails(toys)
    })
 }
 
-// Creates img tag/element and adds the image URL to the src
-let createImgElement = imageURL => {
-   return imageURL.map( image => {
-      return `<img src="${image.image}" class="toy-avatar">`
-   })
-}
-
-let renderImgs = imageURLsArray => {
-   imageURLsArray.forEach(url => {
+// Renders toy details for each retrieved toy from the response
+let renderToyDetails = toys => {
+   toys.forEach(toy => {
       const toysCard = document.createElement("div");
       toysCard.className = "card";
       document.getElementById("toy-collection").appendChild(toysCard);
-      toysCard.innerHTML += url
+      toysCard.innerHTML += `<h2>${toy.name}</h2>`
+      toysCard.innerHTML += `<img src="${toy.image}" class="toy-avatar">`
+      toysCard.innerHTML += `<p>${toy.likes} Likes </p>`
+      toysCard.innerHTML += `<button class="like-btn" id="${toy.id}">Like </button>`
    })
 }
+
+
