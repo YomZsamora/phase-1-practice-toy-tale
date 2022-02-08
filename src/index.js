@@ -26,3 +26,9 @@ let fetchImages = () => {
       renderImgs(imageURLsArray)
    })
 }
+
+let createImgElement = imageURL => {
+   return imageURL.map( image => {
+      return `<img src="${image}">`
+   })
+}
