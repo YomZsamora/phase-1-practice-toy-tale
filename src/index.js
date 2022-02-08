@@ -25,6 +25,7 @@ let fetchToys = () => {
    fetch('http://localhost:3000/toys')
    .then(resp => resp.json())
    .then(toys => { renderToyDetails(toys) })
+   .catch(error => { alert("Kuna Bug Mahali!") });
 }
 
 // Renders toy details for each retrieved toy from the response
@@ -76,6 +77,7 @@ let submitNewToy = (e) => {
    return fetch("http://localhost:3000/toys", configurationObject)
    .then(resp => resp.json())
    .then(toy => { createCardElement(toy) })
+   .catch(error => { alert("Kuna Bug Mahali!") });
 }
 
 // Updates no of likes a cliking on the like button
@@ -88,4 +90,5 @@ let updateNoOfLikes = toy => {
       body: JSON.stringify(toy)
    })
    .then(resp => resp.json())
+   .catch(error => { alert("Kuna Bug Mahali!") });
 }
